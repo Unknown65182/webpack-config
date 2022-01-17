@@ -6,7 +6,7 @@ const App: React.FC = () => {
 
   return (
     <div>
-      <h1>Hello from webpack</h1>
+      <h1>Hello from podval</h1>
       <img src={bg} alt="" width={300} />
     </div>
   );

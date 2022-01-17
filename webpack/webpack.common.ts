@@ -1,27 +1,41 @@
-import { Configuration as WebpackConfiguration } from "webpack";
-import { Configuration as WebpackDevServerConfiguration } from "webpack-dev-server";
+import { Configuration } from "webpack";
 
-import path from "path";
+import { resolve } from "path";
+import { cpus } from "os";
 
 import HtmlPlugin from "html-webpack-plugin";
 import MiniCssExtractPlugin from "mini-css-extract-plugin";
 import CssMinimizerPlugin from "css-minimizer-webpack-plugin";
 import TerserPlugin from "terser-webpack-plugin";
 
-interface Configuration extends WebpackConfiguration {
-  devServer?: WebpackDevServerConfiguration;
-}
-
-const isDev = process.env.NODE_ENV !== "production";
+import { paths } from "./paths";
 
 const config: Configuration = {
-  mode: isDev ? "development" : "production",
-  entry: path.resolve(__dirname, "src", "index.tsx"),
+  entry: paths.source.entry,
   module: {
     rules: [
       {
         test: /\.tsx?$/,
-        use: ["ts-loader"],
+        use: [
+          {
+            loader: "thread-loader",
+            options: {
+              workers: cpus.length - 1,
+              poolTimeout: Infinity,
+              poolRespawn: false,
+              workerParallelJobs: 50,
+            },
+          },
+          {
+            loader: "ts-loader",
+            options: {
+              configFile: paths.config.tsconfig,
+              transpileOnly: true,
+              experimentalWatchApi: true,
+              happyPackMode: true,
+            },
+          },
+        ],
       },
       {
         enforce: "pre",
@@ -67,14 +81,16 @@ const config: Configuration = {
   },
   plugins: [
     new HtmlPlugin({
-      filename: path.resolve(__dirname, "dist", "index.html"),
-      template: path.resolve(__dirname, "public", "index.html"),
+      filename: resolve(paths.build.root, "index.html"),
+      template: resolve(paths.public.root, "index.html"),
       inject: "body",
+      hash: true,
+      minify: "auto",
     }),
     new MiniCssExtractPlugin(),
   ],
   output: {
-    path: path.resolve(__dirname, "./dist"),
+    path: paths.build.root,
     filename: "main.js",
     clean: true,
     assetModuleFilename: "assets/[hash][ext][query]",
@@ -82,19 +98,10 @@ const config: Configuration = {
   resolve: {
     extensions: [".js", ".ts", ".tsx"],
     alias: {
-      "@": path.resolve(__dirname, "src"),
-      public: path.resolve(__dirname, "public"),
+      "@": paths.source.root,
+      public: paths.public.root,
     },
   },
-  devtool: isDev ? "source-map" : false,
-  devServer: {
-    port: 3000,
-    compress: true,
-    static: {
-      directory: path.resolve(__dirname, "./dist"),
-    },
-  },
-  target: isDev ? "web" : "browserslist",
 };
 
 export default config;
