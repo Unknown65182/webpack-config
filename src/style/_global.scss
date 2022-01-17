@@ -1,15 +1,17 @@
 @use "variables";
+@use "fonts";
 
 body {
   margin: 0;
   padding: 0;
   background-color: variables.$bg-color;
+  background-image: url("public/assets/images/bg.jpg");
+  background-size: cover;
+  background-position: center;
   font-size: variables.$font-size;
+  font-family: "Montserrat", sans-serif;
 
   min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  place-content: center;
 }
 
 ::placeholder {
