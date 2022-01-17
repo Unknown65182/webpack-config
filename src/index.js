@@ -1,3 +1,13 @@
-const a = [1, 2, 3];
+const user = {
+  id: "3d5h4d765d7",
+  name: "Alex",
+  age: 20,
+};
 
-console.log(...a);
+const admin = {
+  ...user,
+  root: true,
+};
+
+console.log(user);
+console.log(admin);
