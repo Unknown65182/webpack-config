@@ -1,3 +1,5 @@
+import "./style/index.scss";
+
 const user = {
   id: "3d5h4d765d7",
   name: "Alex",
