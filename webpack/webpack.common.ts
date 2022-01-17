@@ -1,14 +1,12 @@
-import { Configuration } from "webpack";
+import CssMinimizerPlugin from 'css-minimizer-webpack-plugin';
+import HtmlPlugin from 'html-webpack-plugin';
+import MiniCssExtractPlugin from 'mini-css-extract-plugin';
+import { cpus } from 'os';
+import { resolve } from 'path';
+import TerserPlugin from 'terser-webpack-plugin';
+import { Configuration } from 'webpack';
 
-import { resolve } from "path";
-import { cpus } from "os";
-
-import HtmlPlugin from "html-webpack-plugin";
-import MiniCssExtractPlugin from "mini-css-extract-plugin";
-import CssMinimizerPlugin from "css-minimizer-webpack-plugin";
-import TerserPlugin from "terser-webpack-plugin";
-
-import { paths } from "./paths";
+import { paths } from './paths';
 
 const config: Configuration = {
   entry: paths.source.entry,
@@ -18,7 +16,7 @@ const config: Configuration = {
         test: /\.tsx?$/,
         use: [
           {
-            loader: "thread-loader",
+            loader: 'thread-loader',
             options: {
               workers: cpus.length - 1,
               poolTimeout: Infinity,
@@ -27,7 +25,7 @@ const config: Configuration = {
             },
           },
           {
-            loader: "ts-loader",
+            loader: 'ts-loader',
             options: {
               configFile: paths.config.tsconfig,
               transpileOnly: true,
@@ -38,31 +36,31 @@ const config: Configuration = {
         ],
       },
       {
-        enforce: "pre",
+        enforce: 'pre',
         test: /\.js$/,
-        use: ["babel-loader"],
+        use: ['babel-loader'],
       },
       {
         test: /\.(s[ac]|c)ss$/i,
         use: [
           MiniCssExtractPlugin.loader,
-          "css-loader",
-          "postcss-loader",
-          "sass-loader",
+          'css-loader',
+          'postcss-loader',
+          'sass-loader',
         ],
       },
       {
         test: /\.(png|jpe?g|gif|webp|avif)$/i,
-        type: "asset/resource",
+        type: 'asset/resource',
         generator: {
-          filename: "assets/images/[hash][ext][query]",
+          filename: 'assets/images/[hash][ext][query]',
         },
       },
       {
         test: /\.(woff2|woff|eof|ttf|svg)$/i,
-        type: "asset/resource",
+        type: 'asset/resource',
         generator: {
-          filename: "assets/fonts/[hash][ext][query]",
+          filename: 'assets/fonts/[hash][ext][query]',
         },
       },
     ],
@@ -81,24 +79,24 @@ const config: Configuration = {
   },
   plugins: [
     new HtmlPlugin({
-      filename: resolve(paths.build.root, "index.html"),
-      template: resolve(paths.public.root, "index.html"),
-      inject: "body",
+      filename: resolve(paths.build.root, 'index.html'),
+      template: resolve(paths.public.root, 'index.html'),
+      inject: 'body',
       hash: true,
-      minify: "auto",
+      minify: 'auto',
     }),
     new MiniCssExtractPlugin(),
   ],
   output: {
     path: paths.build.root,
-    filename: "main.js",
+    filename: 'main.js',
     clean: true,
-    assetModuleFilename: "assets/[hash][ext][query]",
+    assetModuleFilename: 'assets/[hash][ext][query]',
   },
   resolve: {
-    extensions: [".js", ".ts", ".tsx"],
+    extensions: ['.js', '.ts', '.tsx'],
     alias: {
-      "@": paths.source.root,
+      '@': paths.source.root,
       public: paths.public.root,
     },
   },
