@@ -16,14 +16,15 @@ const isDev = process.env.NODE_ENV !== "production";
 
 const config: Configuration = {
   mode: isDev ? "development" : "production",
+  entry: path.resolve(__dirname, "src", "index.jsx"),
   module: {
     rules: [
       {
-        test: /\.js$/,
-        use: ["babel-loader", "astroturf/loader"],
+        test: /\.jsx?$/,
+        use: ["babel-loader"],
       },
       {
-        test: /\.s?css$/i,
+        test: /\.(s[ac]|c)ss$/i,
         use: [
           MiniCssExtractPlugin.loader,
           "css-loader",
@@ -57,6 +58,9 @@ const config: Configuration = {
   output: {
     path: path.resolve(__dirname, "./dist"),
     filename: "main.js",
+  },
+  resolve: {
+    extensions: [".js", ".jsx"],
   },
   devtool: isDev ? "source-map" : false,
   devServer: {
