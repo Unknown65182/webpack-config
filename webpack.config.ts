@@ -20,13 +20,16 @@ const config: Configuration = {
     rules: [
       {
         test: /\.js$/,
-        use: {
-          loader: "babel-loader",
-        },
+        use: ["babel-loader", "astroturf/loader"],
       },
       {
         test: /\.s?css$/i,
-        use: [MiniCssExtractPlugin.loader, "css-loader", "sass-loader"],
+        use: [
+          MiniCssExtractPlugin.loader,
+          "css-loader",
+          "postcss-loader",
+          "sass-loader",
+        ],
       },
     ],
   },
@@ -62,6 +65,7 @@ const config: Configuration = {
       directory: "./dist",
     },
   },
+  target: isDev ? "web" : "browserslist",
 };
 
 export default config;

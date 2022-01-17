@@ -5,4 +5,13 @@ body {
   padding: 0;
   background-color: variables.$bg-color;
   font-size: variables.$font-size;
+
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  place-content: center;
+}
+
+::placeholder {
+  color: variables.$bg-color;
 }
