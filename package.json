@@ -5,6 +5,7 @@
   "description": "Webpack 5 config",
   "author": "Unknown65182",
   "license": "ISC",
+  "private": true,
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Unknown65182/webpack-config.git"
@@ -17,6 +18,11 @@
     "url": "https://github.com/Unknown65182/webpack-config/issues"
   },
   "homepage": "https://github.com/Unknown65182/webpack-config#readme",
+  "scripts": {
+    "start": "webpack serve",
+    "watch": "webpack --watch",
+    "build": "webpack"
+  },
   "devDependencies": {
     "typescript": "^4.5.4",
     "webpack": "^5.66.0",
