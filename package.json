@@ -3,21 +3,24 @@
   "packageManager": "yarn@3.1.1",
   "version": "0.0.1",
   "description": "Webpack 5 config",
-  "main": "index.ts",
+  "author": "Unknown65182",
+  "license": "ISC",
   "repository": {
-    "type": "git"
+    "type": "git",
+    "url": "git+https://github.com/Unknown65182/webpack-config.git"
   },
   "keywords": [
     "webpack",
     "config"
   ],
-  "author": "Unknown65182",
-  "license": "ISC",
-  "bugs": {},
-  "homepage": "",
+  "bugs": {
+    "url": "https://github.com/Unknown65182/webpack-config/issues"
+  },
+  "homepage": "https://github.com/Unknown65182/webpack-config#readme",
   "devDependencies": {
     "typescript": "^4.5.4",
     "webpack": "^5.66.0",
-    "webpack-cli": "^4.9.1"
+    "webpack-cli": "^4.9.1",
+    "webpack-dev-server": "^4.7.3"
   }
 }
